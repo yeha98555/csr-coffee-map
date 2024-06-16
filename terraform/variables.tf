@@ -18,3 +18,20 @@ variable "credentials" {
   description = "Path to your service account key file"
   type        = string
 }
+
+variable "bq_ods_members" {
+  description = "Members of the ODS gmaps tables"
+  type        = list(string)
+}
+
+variable "bq_ods_places_tablename" {
+  description = "Table name of the ODS places bigquery table"
+  type        = string
+  default     = "ods-gmaps-places"
+}
+
+variable "bq_ods_reviews_tablename" {
+  description = "Table name of the ODS reviews bigquery table"
+  type        = string
+  default     = "ods-gmaps-reviews"
+}

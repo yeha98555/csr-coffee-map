@@ -166,3 +166,22 @@ resource "google_project_iam_member" "viewer_sa_viewer" {
   role    = "roles/viewer"
   member  = "serviceAccount:${google_service_account.viewer_sa.email}"
 }
+
+data "google_iam_policy" "bq_ods_policy" {
+  binding {
+    role = "roles/bigquery.dataOwner"
+    members = toset(var.bq_ods_members)
+  }
+}
+
+resource "google_bigquery_table_iam_policy" "bq_ods_places_policy" {
+  dataset_id = google_bigquery_dataset.etl_ods.dataset_id
+  table_id = var.bq_ods_places_tablename
+  policy_data = data.google_iam_policy.bq_ods_policy.policy_data
+}
+
+resource "google_bigquery_table_iam_policy" "bq_ods_reviews_policy" {
+  dataset_id = google_bigquery_dataset.etl_ods.dataset_id
+  table_id = var.bq_ods_reviews_tablename
+  policy_data = data.google_iam_policy.bq_ods_policy.policy_data
+}
