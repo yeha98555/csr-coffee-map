@@ -8,12 +8,6 @@ terraform {
   }
 }
 
-provider "google" {
-  project     = var.project_id
-  region      = var.region
-  credentials = file(var.credentials)
-}
-
 locals {
   common_tags = {
     project     = var.project_id
