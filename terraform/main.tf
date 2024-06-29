@@ -173,6 +173,11 @@ data "google_iam_policy" "bq_ods_policy" {
     members = toset(var.bq_ods_members)
   }
 }
+resource "google_storage_bucket_iam_binding" "bq_ods_members_viewer" {
+  bucket = google_storage_bucket.etl_processed.name
+  role   = "roles/storage.objectViewer"
+  members = toset(var.bq_ods_members)
+}
 
 resource "google_bigquery_table_iam_policy" "bq_ods_places_policy" {
   dataset_id = google_bigquery_dataset.etl_ods.dataset_id
